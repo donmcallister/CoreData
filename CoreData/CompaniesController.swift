@@ -10,14 +10,25 @@ import UIKit
 
 class CompaniesController: UITableViewController {
     
-    let companies = [
+    var companies = [
         Company(name: "Apple", founded: Date()),
         Company(name: "Google", founded: Date()),
         Company(name: "Facebook", founded: Date())
     ]
+    
+    func addCompany(company: Company) {
+        let tesla = Company(name: "Tesla", founded: Date())
+        // 1 - modify array
+        companies.append(company)
+        // 2 - insert new indexPath into tableView
+        let newIndexPath = IndexPath(row: companies.count - 1, section: 0)
+        tableView.insertRows(at: [newIndexPath], with: .automatic)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Test Add", style: .plain, target: self, action: #selector(addCompany))
         
         view.backgroundColor = .white
         
@@ -41,6 +52,9 @@ class CompaniesController: UITableViewController {
         
         let createCompanyController = CreateCompanyController()
        // createCompanyController.view.backgroundColor = .green
+        
+        //1 -- establish link to the CreateCompanyController() and then be able to call the addCompany method later on.. copy the property (companiesController) into that other VC you want to connect to:
+        createCompanyController.companiesController = self
         
         let navController = CustomNavigationController(rootViewController: createCompanyController)
         
