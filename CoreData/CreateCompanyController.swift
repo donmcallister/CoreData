@@ -8,10 +8,19 @@
 
 import UIKit
 
+//Custom Delegation
+
+protocol CreateCompanyControllerDelegate {
+    func didAddCompany(company: Company)
+}
+
 class CreateCompanyController: UIViewController {
     
+    //not tightly-coupled way to connect VC classes
+    var delegate: CreateCompanyControllerDelegate?
+    
     // 2 - property created to create link
-    var companiesController: CompaniesController?
+ //   var companiesController: CompaniesController?
     
     let nameLabel: UILabel = {
         let label = UILabel()
@@ -55,7 +64,8 @@ class CreateCompanyController: UIViewController {
             let company = Company(name: name, founded: Date())
             
             // 3 -- calling method in other VC view linked property:
-            self.companiesController?.addCompany(company: company)
+            // self.companiesController?.addCompany(company: company)
+            self.delegate?.didAddCompany(company: company)
         }
         
         

@@ -8,7 +8,14 @@
 
 import UIKit
 
-class CompaniesController: UITableViewController {
+class CompaniesController: UITableViewController, CreateCompanyControllerDelegate {
+    
+    func didAddCompany(company: Company) {
+        companies.append(company)
+        let newIndexPath = IndexPath(row: companies.count - 1, section: 0)
+        tableView.insertRows(at: [newIndexPath], with: .automatic)
+    }
+    
     
     var companies = [
         Company(name: "Apple", founded: Date()),
@@ -54,7 +61,9 @@ class CompaniesController: UITableViewController {
        // createCompanyController.view.backgroundColor = .green
         
         //1 -- establish link to the CreateCompanyController() and then be able to call the addCompany method later on.. copy the property (companiesController) into that other VC you want to connect to:
-        createCompanyController.companiesController = self
+       // createCompanyController.companiesController = self
+        createCompanyController.delegate = self
+        
         
         let navController = CustomNavigationController(rootViewController: createCompanyController)
         
